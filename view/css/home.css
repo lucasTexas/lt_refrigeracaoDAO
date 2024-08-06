@@ -1,0 +1,87 @@
+body{
+	background-color: #1e90ff;
+}
+
+#bem_vindo{
+	color: #ffffff;
+	position: absolute;
+	left: 30px;
+	top: 20px;
+	font-size: 20px;
+	font-family: cambria;
+}
+
+#pergunta{
+	color: #ffffff;
+	position: absolute;
+	left: 30px;
+	top: 45px;
+	font-size: 20px;
+	font-family: cambria;
+}
+
+#agenda{
+	border: 1px solid;
+	position: absolute;
+	left: 200px;
+	top: 150px;
+	width: 170px;
+	height: 140px;
+	color: #ffffff;
+	background-color: #1e90ff;
+	cursor: pointer;
+	text-align: center;
+	font-family: cambria;
+	font-size: 20px;
+}
+
+#reserva_servico{
+	border: 1px solid;
+	position: absolute;
+	left: 500px;
+	top: 150px;
+	width: 170px;
+	height: 140px;
+	color: #ffffff;
+	background-color: #1e90ff;
+	cursor: pointer;
+	text-align: center;
+	font-family: cambria;
+	font-size: 20px;
+}
+
+#relacao_clientes{
+	border: 1px solid;
+	position: absolute;
+	left: 200px;
+	top: 400px;
+	width: 170px;
+	height: 140px;
+	color: #ffffff;
+	background-color: #1e90ff;
+	cursor: pointer;
+	text-align: center;
+	font-family: cambria;
+	font-size: 20px;
+}
+
+#registro_cliente{
+	border: 1px solid;
+	position: absolute;
+	left: 500px;
+	top: 400px;
+	width: 170px;
+	height: 140px;
+	color: #ffffff;
+	background-color: #1e90ff;
+	cursor: pointer;
+	text-align: center;
+	font-family: cambria;
+	font-size: 20px;
+}
+
+#caixas{
+	position: absolute;
+	left: 50px;
+	height: 800px;
+}

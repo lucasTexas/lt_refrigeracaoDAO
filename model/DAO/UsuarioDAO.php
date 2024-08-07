@@ -23,11 +23,12 @@ class UsuarioDAO{
             $sql = "INSERT INTO Usuario(nome, email, senha) VALUES (:nome,:email,:senha)";
             $p_sql = BDPDO::getInstance()->prepare($sql);
             $p_sql->bindValue(":nome", $usuario->getNome());
-            $p_sql->bindValue(":email", $Usuario->getEmail());
+            $p_sql->bindValue(":email", $usuario->getEmail());
             $p_sql->bindValue(":senha", $usuario->getSenha());
             return $p_sql->execute();
         } catch (Exception $e) {
             print "Erro ao executar a função de salvar: --- " . $e->getMessage();
+            return false;
         }
     }
 

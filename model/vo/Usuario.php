@@ -6,6 +6,12 @@
 		private $email;
 		private $senha;
 
+		function __construct($nome, $email, $senha){
+			$this->nome = $nome;
+			$this->email = $email;
+			$this->senha= $senha;
+		}
+
 		function getIdUsuario(){
 			return $this->idUsuario;
 		}
@@ -35,7 +41,7 @@
 		}
 
 		function toString(){
-			return $this->nome;
+			return $this->email;
 		}
 
 

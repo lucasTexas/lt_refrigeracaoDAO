@@ -1,6 +1,6 @@
 <?php
 	
-	public class Servico{
+	class Servico{
 		private $idServico;
 		private $tipoServico;
 		private $cliente;
@@ -8,8 +8,12 @@
 		private $hora;
 		private $localServico;
 
-		function __construct($cliente){
+		function __construct($tipoServico, $cliente, $data, $hora, $localServico){
+			$this->tipoServico = $tipoServico;
 			$this->cliente = $cliente;
+			$this->data = $data;
+			$this->hora = $hora;
+			$this->localServico = $localServico;
 		}
 
 		function getIdServico(){
@@ -38,6 +42,20 @@
 		}
 		function setData($data){
 			$this->data = $data;
+		}
+
+		function getHora(){
+			return $this->hora;
+		}
+		function setHora($hora){
+			$this->hora = $hora;
+		}
+
+		function getLocalServico(){
+			return $this->localServico;
+		}
+		function setLocalServico($localServico){
+			$this->localServico = $localServico;
 		}
 
 		function toString(){

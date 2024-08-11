@@ -42,10 +42,7 @@ class ServicoDAO{
             $p_sql->bindValue(":hora", $servico->getHora());
             $p_sql->bindValue(":local_servico", $servico->getLocalServico());
             $p_sql->bindValue(":cliente", $servico->getCliente());
-            
-            //critografando a senha para md5, asism o usuário terá mais segurança, já que frequentemente usamos a mesma senha para diversas aplicações.
-            #$p_sql->bindValue(":senha", md5($usuario->getSenha()));
-            $p_sql->bindValue(":id", $usuario->getId());
+            //$p_sql->bindValue(":id", $usuario->getId());
             return $p_sql->execute();
         } catch (Exception $e) {
             print "Erro ao executar a função de atualizar: --- " . $e->getMessage();
@@ -53,14 +50,45 @@ class ServicoDAO{
 
     }
 
-    public function delete($email){
+    public function delete($data, $hora){
         try {
-            $sql = "DELETE FROM Servico WHERE id = :id";
+            $sql = "DELETE FROM Servico WHERE data = :data AND hora = :hora";
             $p_sql = BDPDO::getInstance()->prepare($sql);
-            $p_sql->bindValue(":id", $id);
+            $p_sql->bindValue(":data", $data);
+            $p_sql->bindValue(":hora", $hora);
             return $p_sql->execute();
         } catch (Exception $e) {
             print "Erro ao executar a função de deletar --- " . $e->getMessage();
+        }
+    }
+
+    private function converterDadoParaObjeto($row){
+        $obj = new Servico("", "", "", "", "", "");
+        $obj->setIdServico($row['id']);
+        $obj->setTipoServico($row['tipo_servico']);
+        $obj->setCliente($row['cliente']);
+        $obj->setData($row['data']);
+        $obj->setHora($row['hora']);
+        $obj->setLocalServico($row['local_servico']);
+        return $obj;
+    }
+
+    public function listAll(){ //continuar a partir daqui
+        try{
+            $sql = "SELECT * FROM Servico";
+            $p_sql = BDPDO::getInstance()->prepare($sql);
+            $p_sql->execute();
+
+            $lista = array();
+            $row = $p_sql->fetch(PDO::FETCH_ASSOC);
+            while ($row) {
+                $lista[] = $this->converterDadoParaObjeto($row);
+                $row = $p_sql->fetch(PDO::FETCH_ASSOC);
+            }
+            return $lista;
+        }catch(Exception $e){
+            print "Ocorreu um erro ao tentar executar esta ação, foi gerado
+ um LOG do mesmo, tente novamente mais tarde.";
         }
     }
 

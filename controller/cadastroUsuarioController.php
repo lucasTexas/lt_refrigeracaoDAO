@@ -16,7 +16,7 @@ if(isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['senha'])){
 			$cadastro = $usuarioDAO->insert($usuario);
 
 			if($cadastro){
-				header("Location: /lt_refrigeracaoDAO/view/php/login.php");
+				header("Location: /lt_refrigeracaoDAO/controller/cadastroUsuarioAlert.php");
 				exit();
 			}else{
 				print_r("<script>alert('Falha no cadastro')</script>");

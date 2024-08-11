@@ -40,9 +40,9 @@ class UsuarioDAO{
             $p_sql->bindValue(":email", $usuario->getEmail());
             $p_sql->bindValue(":senha", $senha->getSenha());
             
-            //critografando a senha para md5, asism o usuário terá mais segurança, já que frequentemente usamos a mesma senha para diversas aplicações.
+            //critografando a senha para md5
             $p_sql->bindValue(":senha", md5($usuario->getSenha()));
-            $p_sql->bindValue(":id", $usuario->getId());
+            //$p_sql->bindValue(":id", $usuario->getId());
             return $p_sql->execute();
         } catch (Exception $e) {
             print "Erro ao executar a função de atualizar: --- " . $e->getMessage();
@@ -72,56 +72,32 @@ class UsuarioDAO{
             foreach ($usuarios as $key => $usuario) {
                 if(in_array($email, $usuario) && in_array($senha, $usuario)){
                     return true;
-                }
-                return false;
+                } 
             }
+            return false;
 
 
 
         }catch(Exception $e) {
             print "Erro ao executar a função: --- " . $e->getMessage();
         }
+    }
 
+    public static function getUsuarioNome($email){
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*
-
-        $query = "SELECT Email, Senha FROM Usuario";
-
-        $result = pg_query($connection, $query);
-
-         while ($row = pg_fetch_assoc($result)) {
-            $results[] = $row;
-        }
-
-        foreach($results as $i){
-            if(in_array($email, $i) && in_array($senha, $i)){
-                return true;
+        try{
+            $sql = "SELECT nome FROM Usuario WHERE email = '$email'";
+            $p_sql = BDPDO::getInstance()->prepare($sql);
+            $p_sql->execute();
+            $usuario = $p_sql->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($usuario as $key => $value) {
+                return $value['nome'];
             }
+            return ' ';
+        }catch(Exception $e){
+            print "Erro ao executar a função: --- " . $e->getMessage();
         }
-        return false;*/
-
-}
-
+    }
 
 
 }

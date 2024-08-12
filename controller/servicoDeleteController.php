@@ -5,7 +5,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lt_refrigeracaoDAO/model/dao/ServicoD
 
 $servicoDAO = ServicoDAO::getInstance();
 
+// print_r($_POST);
+
 $delete = $servicoDAO->delete($_POST['data'], $_POST['hora']);
+
 
 if ($delete){
 

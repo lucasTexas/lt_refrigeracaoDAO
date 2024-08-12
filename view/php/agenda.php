@@ -86,7 +86,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lt_refrigeracaoDAO/model/dao/ServicoD
 					<input type='hidden' name='data' value=".$value->getData().">
 					<input type='hidden' name='hora' value=".$value->getHora().">
 					<button type='submit'>Deletar</button></form></td>
-					<td><form method='POST' action='/lt_refrigeracaoDAO/view/php/alterar_servico.php'><button type='submit'>Alterar</button></form></td>
+					<td><form method='POST' action='/lt_refrigeracaoDAO/view/php/alterar_servico.php'>
+					<input type='hidden' name='data' value=".$value->getData().">
+					<input type='hidden' name='hora' value=".$value->getHora().">
+					<button type='submit'>Alterar</button></form></td>
 				</tr>");
 		}
 		//solução: em cada botão colocar uma função de enviar dados/excluir esses dados

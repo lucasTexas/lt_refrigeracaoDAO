@@ -1,9 +1,14 @@
 <?php
 	
-	public class Cliente{
+	class Cliente{
 		private $idCliente;
 		private $nome;
 		private $telefone;
+
+		function __construct($nome, $telefone){
+			$this->nome = $nome;
+			$this->telefone = $telefone;
+		}
 
 		function getIdCliente(){
 			return $this->idCliente;
@@ -27,7 +32,7 @@
 		}
 
 		function toString(){
-			return $this->nome;
+			return $this->telefone;
 		}
 
 

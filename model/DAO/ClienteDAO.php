@@ -30,16 +30,13 @@ class ClienteDAO{
         }
     }
 
-    public function update($cliente){
+    public function update($cliente, $telefoneAntigo){
         try {
-            $sql = "UPDATE Cliente SET nome = :nome, telefone =:telefone";
+            $sql = "UPDATE Cliente SET nome = :nome, telefone =:telefone WHERE telefone = :telefoneAntigo";
             $p_sql = BDPDO::getInstance()->prepare($sql);
             $p_sql->bindValue(":nome", $cliente->getNome());
             $p_sql->bindValue(":telefone", $cliente->getTelefone());
-            
-            //critografando a senha para md5, asism o usuário terá mais segurança, já que frequentemente usamos a mesma senha para diversas aplicações.
-            #$p_sql->bindValue(":senha", md5($usuario->getSenha()));
-            $p_sql->bindValue(":id", $usuario->getId());
+            $p_sql->bindValue(":telefoneAntigo", $telefoneAntigo);
             return $p_sql->execute();
         } catch (Exception $e) {
             print "Erro ao executar a função de atualizar: --- " . $e->getMessage();
@@ -47,17 +44,43 @@ class ClienteDAO{
 
     }
 
-    public function delete($email){
+    public function delete($telefone){
         try {
-            $sql = "DELETE FROM Cliente WHERE id = :id";
+            $sql = "DELETE FROM Cliente WHERE telefone = :telefone";
             $p_sql = BDPDO::getInstance()->prepare($sql);
-            $p_sql->bindValue(":id", $id);
+            $p_sql->bindValue(":telefone", $telefone);
             return $p_sql->execute();
         } catch (Exception $e) {
             print "Erro ao executar a função de deletar --- " . $e->getMessage();
         }
     }
 
+    private function converterDadoParaObjeto($row){
+        $obj = new Cliente("", "");
+        $obj->setIdCliente($row['id']);
+        $obj->setNome($row['nome']);
+        $obj->setTelefone($row['telefone']);
+        return $obj;
+    }
+
+    public function listAll(){ //continuar a partir daqui
+        try{
+            $sql = "SELECT * FROM Cliente";
+            $p_sql = BDPDO::getInstance()->prepare($sql);
+            $p_sql->execute();
+
+            $lista = array();
+            $row = $p_sql->fetch(PDO::FETCH_ASSOC);
+            while ($row) {
+                $lista[] = $this->converterDadoParaObjeto($row);
+                $row = $p_sql->fetch(PDO::FETCH_ASSOC);
+            }
+            return $lista;
+        }catch(Exception $e){
+            print "Ocorreu um erro ao tentar executar esta ação, foi gerado
+ um LOG do mesmo, tente novamente mais tarde.";
+        }
+    }
 
 }
 

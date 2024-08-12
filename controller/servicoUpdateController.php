@@ -9,10 +9,14 @@ $data = $_POST['data'];
 $hora = $_POST['hora'];
 $localServico = $_POST['local_servico'];
 
+$dataAntiga = $_POST['dataAntiga'];
+$horaAntiga = $_POST['horaAntiga'];
+
+
 $servicoDAO = ServicoDAO::getInstance();
 $servico = new Servico($tipoServico, $cliente, $data, $hora, $localServico);
 
-$update = $servicoDAO->update($servico);
+$update = $servicoDAO->update($servico, $dataAntiga, $horaAntiga);
 
 if ($update){
 

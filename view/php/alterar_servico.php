@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
 <head>
 	<title>Alterar Serviço</title>
@@ -18,6 +19,12 @@
 			<label class="label">NOVO LOCAL DO SERVIÇO: </label><br>
 			<input type="text" name="local_servico" class="input"><br><br><br>
 
+			<?php
+			print_r("
+			<input type='hidden' name='dataAntiga' value=".$_POST['data'].">
+			<input type='hidden' name='horaAntiga' value=".$_POST['hora'].">
+			");
+			?>
 			<button type="submit">
 				Alterar Serviço
 			</button><br><br><br><br><br><br><br><br>

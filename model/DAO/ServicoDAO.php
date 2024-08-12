@@ -33,15 +33,17 @@ class ServicoDAO{
         }
     }
 
-    public function update($servico){
+    public function update($servico, $data, $hora){
         try {
-            $sql = "UPDATE Servico SET tipo_servico = :tipo_servico, data =:data, hora = :hora, local_servico = :local_servico, cliente = :cliente";
+            $sql = "UPDATE Servico SET tipo_servico = :tipo_servico, data =:data, hora = :hora, local_servico = :local_servico, cliente = :cliente WHERE data = :dataAntiga AND hora = :horaAntiga";
             $p_sql = BDPDO::getInstance()->prepare($sql);
             $p_sql->bindValue(":tipo_servico", $servico->getTipoServico());
             $p_sql->bindValue(":data", $servico->getData());
             $p_sql->bindValue(":hora", $servico->getHora());
             $p_sql->bindValue(":local_servico", $servico->getLocalServico());
             $p_sql->bindValue(":cliente", $servico->getCliente());
+            $p_sql->bindValue(":dataAntiga", $data);
+            $p_sql->bindValue(":horaAntiga", $hora);
             //$p_sql->bindValue(":id", $usuario->getId());
             return $p_sql->execute();
         } catch (Exception $e) {

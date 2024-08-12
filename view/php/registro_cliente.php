@@ -8,12 +8,14 @@
 		<meta name="author" content="Lucas Texas">
 		<meta charset="utf-8">
 		
-		<link rel="stylesheet" type="text/css" href="../css/registro_cliente.css">
+		<!--
+		<link rel="stylesheet" type="text/css" href="../css/registro_cliente.css">-->
 
 	</head>
 
 	<body>
 
+		
 		<nav id="menu">
 			<object data="pinguim_LT.png" id="logoImage"></object>
 			
@@ -30,6 +32,20 @@
 			<a href="logout.html"><button type="button" value="LOGOUT" class="display_inline" id="logout">LOGOUT</button></a>
 
 		</nav>
+	
+
+	<form name="registro_cliente" method="POST" action="/lt_refrigeracaoDAO/controller/registroClienteController.php" class="form_registro_cliente">
+
+			<label class="label">NOME DO CLIENTE: </label><br>
+			<input type="text" name="nome" class="input"><br><br>
+			<label class="label">TELEFONE DO CLIENTE: </label><br>
+			<input type="text" name="telefone" class="input"><br><br>
+
+			<button type="submit">
+				Registrar Cliente
+			</button><br><br><br><br><br><br><br><br>
+		</form>
+	
 	
 	</body>
 

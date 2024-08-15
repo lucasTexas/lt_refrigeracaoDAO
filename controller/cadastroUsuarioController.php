@@ -3,6 +3,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] .'/lt_refrigeracaoDAO/model/vo/Usuario.php'; 
 require_once $_SERVER['DOCUMENT_ROOT'] .'/lt_refrigeracaoDAO/model/DAO/UsuarioDAO.php';
 
+
 if(isset($_POST['nome']) && isset($_POST['email']) && isset($_POST['senha'])){
 	if($_POST['nome'] === null || $_POST['email'] === null || $_POST['senha'] === null){
 			print_r("<script>alert('Dados incompletos')</script>");

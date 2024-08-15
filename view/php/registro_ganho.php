@@ -1,35 +1,30 @@
 <!DOCTYPE html>
-
-<?php  
-session_start();
-
-if(!isset($_SESSION['user'])){
-    header('Location: /lt_refrigeracaoDAO/controller/loginAlertHome.php');
-    exit();
-}
-
-// Sanitização do ID
-$id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
+<?php 
+    session_start();
+    if(!isset($_SESSION['user'])){
+        header('Location: /lt_refrigeracaoDAO/controller/loginAlertHome.php');
+        exit();
+    }
 ?>
-
 <html lang="pt-br">
 <head>
     <meta charset="utf-8">
+    <meta name="author" content="Lucas Texas">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alterar Cliente</title>
+    <title>Registro de Ganho</title>
     <!-- Bootstrap CSS via CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         #menu {
             background-color: #1e90ff;
             color: white;
-            height: 100vh; /* Ocupa toda a altura da tela */
-            width: 250px; /* Largura do menu */
-            position: fixed; /* Fixa o menu na lateral */
+            height: 100vh;
+            width: 250px;
+            position: fixed;
             top: 0;
             left: 0;
             padding-top: 20px;
-            overflow-y: auto; /* Adiciona rolagem vertical se necessário */
+            overflow-y: auto;
         }
         .nav-link {
             color: white;
@@ -42,35 +37,42 @@ $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
         .nav-link:hover {
             background-color: #0056b3;
         }
-        #logoImage {
-            height: 40px;
-            width: auto;
-            display: block;
-            margin: 0 auto 20px auto;
-        }
         #main-content {
-            margin-left: 250px; /* Espaço para o menu lateral */
+            margin-left: 250px;
             padding: 20px;
+        }
+        @media (max-width: 768px) {
+            #menu {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+            #main-content {
+                margin-left: 0;
+            }
+        }
+        .form-group {
+            margin-bottom: 1rem;
         }
     </style>
 </head>
 <body>
+
     <?php include 'menu.php'; ?>
-    
+
     <article id="main-content">
         <div class="container">
-            <h1 class="mb-4">Alterar Cliente</h1>
-            <form name="alterar_cliente" method="POST" action="/lt_refrigeracaoDAO/controller/clienteUpdateController.php">
+            <h1 class="mb-4">Registro de Ganho</h1>
+            <form name="registro_ganho" method="POST" action="/lt_refrigeracaoDAO/controller/registroGanhoController.php">
                 <div class="form-group">
-                    <label for="nome">NOVO NOME:</label>
-                    <input type="text" name="nome" id="nome" class="form-control" required>
+                    <label for="valor">VALOR DO GANHO:</label>
+                    <input type="text" name="valor" id="valor" class="form-control" required pattern="\d+(\.\d{1,2})?" title="Por favor, insira um valor válido.">
                 </div>
                 <div class="form-group">
-                    <label for="telefone">NOVO TELEFONE:</label>
-                    <input type="text" name="telefone" id="telefone" class="form-control" required pattern="\(\d{2}\)\s\d{4,5}-\d{4}" title="Digite o telefone no formato (XX) XXXXX-XXXX">
+                    <label for="descricao">DESCRIÇÃO DO GANHO:</label>
+                    <input type="text" name="descricao" id="descricao" class="form-control" required>
                 </div>
-                <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>">
-                <button type="submit" class="btn btn-primary">Alterar Cliente</button>
+                <button type="submit" class="btn btn-primary">Registrar Ganho</button>
             </form>
         </div>
     </article>

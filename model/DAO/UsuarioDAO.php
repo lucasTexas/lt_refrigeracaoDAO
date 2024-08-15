@@ -32,17 +32,16 @@ class UsuarioDAO{
         }
     }
 
-    public function update($usuario){
+    public function update($usuario, $id){
         try {
-            $sql = "UPDATE Usuario SET nome = :nome, email =:email, senha = :senha";
+            $sql = "UPDATE Usuario SET nome = :nome, email =:email, senha = :senha WHERE id = :id";
             $p_sql = BDPDO::getInstance()->prepare($sql);
             $p_sql->bindValue(":nome", $usuario->getNome());
             $p_sql->bindValue(":email", $usuario->getEmail());
-            $p_sql->bindValue(":senha", $senha->getSenha());
+            $p_sql->bindValue(":senha", $usuario->getSenha());
+            $p_sql->bindValue(":id", $id);
             
-            //critografando a senha para md5
-            $p_sql->bindValue(":senha", md5($usuario->getSenha()));
-            //$p_sql->bindValue(":id", $usuario->getId());
+            
             return $p_sql->execute();
         } catch (Exception $e) {
             print "Erro ao executar a função de atualizar: --- " . $e->getMessage();
@@ -50,11 +49,11 @@ class UsuarioDAO{
 
     }
 
-    public function delete($email){
+    public function delete($id){
         try {
-            $sql = "DELETE FROM Usuario WHERE email = :email";
+            $sql = "DELETE FROM Usuario WHERE id = :id";
             $p_sql = BDPDO::getInstance()->prepare($sql);
-            $p_sql->bindValue(":email", $email);
+            $p_sql->bindValue(":id", $id);
             return $p_sql->execute();
         } catch (Exception $e) {
             print "Erro ao executar a função de deletar --- " . $e->getMessage();
@@ -96,6 +95,34 @@ class UsuarioDAO{
             return ' ';
         }catch(Exception $e){
             print "Erro ao executar a função: --- " . $e->getMessage();
+        }
+    }
+
+    private function converterDadoParaObjeto($row){
+        $obj = new Usuario("", "", "");
+        $obj->setIdUsuario($row['id']);
+        $obj->setNome($row['nome']);
+        $obj->setEmail($row['email']);
+        $obj->setSenha($row['senha']);
+        return $obj;
+    }
+
+    public function listAll(){ 
+        try{
+            $sql = "SELECT * FROM Usuario";
+            $p_sql = BDPDO::getInstance()->prepare($sql);
+            $p_sql->execute();
+
+            $lista = array();
+            $row = $p_sql->fetch(PDO::FETCH_ASSOC);
+            while ($row) {
+                $lista[] = $this->converterDadoParaObjeto($row);
+                $row = $p_sql->fetch(PDO::FETCH_ASSOC);
+            }
+            return $lista;
+        }catch(Exception $e){
+            print "Ocorreu um erro ao tentar executar esta ação, foi gerado
+ um LOG do mesmo, tente novamente mais tarde.";
         }
     }
 

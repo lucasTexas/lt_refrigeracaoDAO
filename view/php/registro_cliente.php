@@ -1,52 +1,125 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
+<?php 
+    session_start();
+    if(!isset($_SESSION['user'])){
+        header('Location: /lt_refrigeracaoDAO/controller/loginAlertHome.php');
+        exit();
+    }
+?>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Lucas Texas">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Cliente</title>
+    <!-- Bootstrap CSS via CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        #menu {
+            background-color: #1e90ff;
+            color: white;
+            height: 100vh; /* Ocupa toda a altura da tela */
+            width: 250px; /* Largura do menu */
+            position: fixed; /* Fixa o menu na lateral */
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+            overflow-y: auto; /* Adiciona rolagem vertical se necessário */
+            transition: transform 0.3s ease-in-out;
+        }
+        #menu.collapsed {
+            transform: translateX(-250px); /* Esconde o menu fora da tela */
+        }
+        .nav-link {
+            color: white;
+            display: block;
+            padding: 10px 15px;
+            text-align: left;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+        .nav-link:hover {
+            background-color: #0056b3;
+        }
+        #logoImage {
+            height: 40px;
+            width: auto;
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+        #main-content {
+            margin-left: 250px; /* Espaço para o menu lateral */
+            padding: 20px;
+            transition: margin-left 0.3s ease-in-out;
+        }
+        #menu.collapsed + #main-content {
+            margin-left: 0; /* Remove o espaço lateral quando o menu está escondido */
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        /* Estilos para telas menores */
+        @media (max-width: 768px) {
+            #menu {
+                transform: translateX(-250px); /* Esconde o menu inicialmente em telas menores */
+            }
+            #menu.collapsed {
+                transform: translateX(0); /* Mostra o menu quando alternado */
+            }
+            #main-content {
+                margin-left: 0; /* Remove o espaço lateral em telas menores */
+            }
+            #menu-toggle {
+                display: block;
+                position: fixed;
+                top: 10px;
+                left: 10px;
+                background-color: #1e90ff;
+                color: white;
+                border: none;
+                padding: 10px;
+                border-radius: 5px;
+                z-index: 1000;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Botão de toggle para o menu (visível em telas menores) -->
+    <button id="menu-toggle" class="d-lg-none">Menu</button>
 
-<html>
+    <?php include 'menu.php'; ?>
 
-	<head>
+    <article id="main-content">
+        <div class="container">
+            <h1 class="mb-4">Registro de Cliente</h1>
+            <form name="registro_cliente" method="POST" action="/lt_refrigeracaoDAO/controller/registroClienteController.php">
+                <div class="form-group">
+                    <label for="nome">NOME DO CLIENTE:</label>
+                    <input type="text" name="nome" id="nome" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefone">TELEFONE DO CLIENTE:</label>
+                    <input type="text" name="telefone" id="telefone" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Registrar Cliente</button>
+            </form>
+        </div>
+    </article>
 
-		<title>Registro de cliente</title>
-		<meta name="author" content="Lucas Texas">
-		<meta charset="utf-8">
-		
-		<!--
-		<link rel="stylesheet" type="text/css" href="../css/registro_cliente.css">-->
+    <!-- jQuery via CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- Popper.js via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <!-- Bootstrap JS via CDN -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-	</head>
-
-	<body>
-
-		
-		<nav id="menu">
-			<object data="pinguim_LT.png" id="logoImage"></object>
-			
-			<a href="home.php"><button type="button" value="HOME" class="display_inline" id="home">HOME</button></a>
-
-			<a href="agenda.php"><button type="button" value="AGENDA" class="display_inline" id="agenda">AGENDA</button></a>
-
-			<a href="reserva_servico.php"><button type="button" value="RESERVAR SERVIÇO" class="display_inline" id="reserva_servico">RESERVAR SERVIÇO</button></a>
-
-			<a href="relacao_clientes.php"><button type="button" value="CLIENTES" class="display_inline" id="clientes">CLIENTES</button></a>
-
-			<a href="registro_cliente.php"><button type="button" value="REGISTRAR CLIENTE" class="display_inline" id="registro_cliente">REGISTRAR CLIENTE</button></a>
-
-			<a href="logout.html"><button type="button" value="LOGOUT" class="display_inline" id="logout">LOGOUT</button></a>
-
-		</nav>
-	
-
-	<form name="registro_cliente" method="POST" action="/lt_refrigeracaoDAO/controller/registroClienteController.php" class="form_registro_cliente">
-
-			<label class="label">NOME DO CLIENTE: </label><br>
-			<input type="text" name="nome" class="input"><br><br>
-			<label class="label">TELEFONE DO CLIENTE: </label><br>
-			<input type="text" name="telefone" class="input"><br><br>
-
-			<button type="submit">
-				Registrar Cliente
-			</button><br><br><br><br><br><br><br><br>
-		</form>
-	
-	
-	</body>
-
+    <script>
+        // Alterna a visibilidade do menu lateral em telas menores
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.getElementById('menu').classList.toggle('collapsed');
+        });
+    </script>
+</body>
 </html>

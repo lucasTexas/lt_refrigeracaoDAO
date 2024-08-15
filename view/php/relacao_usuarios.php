@@ -5,12 +5,13 @@ if (!isset($_SESSION['user'])) {
     header('Location: /lt_refrigeracaoDAO/controller/loginAlertHome.php');
     exit();
 }
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lt_refrigeracaoDAO/model/DAO/UsuarioDAO.php';
 ?>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relação de Clientes</title>
+    <title>Usuários</title>
     <!-- Bootstrap CSS via CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -85,44 +86,45 @@ if (!isset($_SESSION['user'])) {
     <?php include 'menu.php'; ?>
 
     <article id="main-content">
-        <h1 class="mb-4">Relação de Clientes</h1>
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>NOME</th>
-                        <th>TELEFONE</th>
-                        <th>AÇÕES</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    require_once $_SERVER['DOCUMENT_ROOT'] . '/lt_refrigeracaoDAO/model/dao/ClienteDAO.php';
-                    $clientes = ClienteDAO::getInstance();
-                    $listaClientes = $clientes->listAll();
+        <div class="container">
+            <h1 class="mb-4">Usuários</h1>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>NOME</th>
+                            <th>EMAIL</th>
+                            <th>AÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $usuarios = UsuarioDAO::getInstance();
+                        $listaUsuarios = $usuarios->listAll();
 
-                    foreach ($listaClientes as $value) {
-                        echo "<tr>
-                            <td>" . htmlspecialchars($value->getNome()) . "</td>
-                            <td>" . htmlspecialchars($value->getTelefone()) . "</td>
-                            <td>
-                                <form method='POST' action='/lt_refrigeracaoDAO/controller/clienteDeleteController.php' class='d-inline'>
-                                    <input type='hidden' name='id' value='" . htmlspecialchars($value->getIdCliente()) . "'>
-                                    <button type='submit' class='btn btn-danger btn-sm btn-action'>Deletar</button>
-                                </form>
-                                <form method='POST' action='/lt_refrigeracaoDAO/view/php/alterar_cliente.php' class='d-inline'>
-                                    <input type='hidden' name='id' value='" . htmlspecialchars($value->getIdCliente()) . "'>
-                                    <button type='submit' class='btn btn-warning btn-sm btn-action'>Alterar</button>
-                                </form>
-                            </td>
-                        </tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
+                        foreach ($listaUsuarios as $usuario) {
+                            echo "<tr>
+                                <td>" . $usuario->getNome() . "</td>
+                                <td>" . $usuario->getEmail() . "</td>
+                                <td>
+                                    <form method='POST' action='/lt_refrigeracaoDAO/controller/usuarioDeleteController.php' class='d-inline'>
+                                        <input type='hidden' name='id' value='" . $usuario->getIdUsuario() . "'>
+                                        <button type='submit' class='btn btn-danger btn-sm btn-action'>Deletar</button>
+                                    </form>
+                                    <form method='POST' action='/lt_refrigeracaoDAO/view/php/alterar_usuario.php' class='d-inline'>
+                                        <input type='hidden' name='id' value='" . $usuario->getIdUsuario() . "'>
+                                        <button type='submit' class='btn btn-warning btn-sm btn-action'>Alterar</button>
+                                    </form>
+                                </td>
+                            </tr>";
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </article>
-
+    
     <!-- jQuery via CDN -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <!-- Popper.js via CDN -->

@@ -6,13 +6,16 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lt_refrigeracaoDAO/model/dao/ClienteD
 $nome = $_POST['nome'];
 $telefone = $_POST['telefone'];
 
-$telefoneAntigo = $_POST['telefoneAntigo'];
+$id = $_POST['id'];
 
+/*print_r($id);
+print_r($nome);
+print_r($telefone);*/
 
-$clienteDAO = clienteDAO::getInstance();
+$clienteDAO = ClienteDAO::getInstance();
 $cliente = new Cliente($nome, $telefone);
 
-$update = $clienteDAO->update($cliente, $telefoneAntigo);
+$update = $clienteDAO->update($cliente, $id);
 
 if ($update){
 

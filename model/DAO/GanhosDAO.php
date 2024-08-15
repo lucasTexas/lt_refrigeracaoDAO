@@ -1,11 +1,11 @@
 <?php
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/lt_refrigeracaoDAO/model/dao/BDPDO.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/lt_refrigeracaoDAO/model/vo/Cliente.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lt_refrigeracaoDAO/model/vo/Ganhos.php';
 
-class ClienteDAO{
+class GanhosDAO {
 
-	public static $instance;
+    public static $instance;
 
     private function __construct() {
         
@@ -13,29 +13,29 @@ class ClienteDAO{
 
     public static function getInstance(){
         if (!isset(self::$instance))
-            self::$instance = new ClienteDAO();
+            self::$instance = new GanhosDAO();
 
         return self::$instance;
     }
 
-    public function insert($cliente){
+    public function insert($ganho){
         try {
-            $sql = "INSERT INTO Cliente(nome, telefone) VALUES (:nome, :telefone)";
+            $sql = "INSERT INTO ganhos(valor, descricao) VALUES (:valor, :descricao)";
             $p_sql = BDPDO::getInstance()->prepare($sql);
-            $p_sql->bindValue(":nome", $cliente->getNome());
-            $p_sql->bindValue(":telefone", $cliente->getTelefone());
+            $p_sql->bindValue(":valor", $ganho->getValor());
+            $p_sql->bindValue(":descricao", $ganho->getDescricao());
             return $p_sql->execute();
         } catch (Exception $e){
             print "Erro ao executar a função de salvar: --- " . $e->getMessage();
         }
     }
 
-    public function update($cliente, $id){
+    public function update($ganho, $id){
         try {
-            $sql = "UPDATE Cliente SET nome = :nome, telefone =:telefone WHERE id = :id";
+            $sql = "UPDATE ganhos SET valor = :valor, descricao = :descricao WHERE id = :id";
             $p_sql = BDPDO::getInstance()->prepare($sql);
-            $p_sql->bindValue(":nome", $cliente->getNome());
-            $p_sql->bindValue(":telefone", $cliente->getTelefone());
+            $p_sql->bindValue(":valor", $ganho->getValor());
+            $p_sql->bindValue(":descricao", $ganho->getDescricao());
             $p_sql->bindValue(":id", $id);
             return $p_sql->execute();
         } catch (Exception $e) {
@@ -44,9 +44,9 @@ class ClienteDAO{
 
     }
 
-    public function delete($id){
+   public function delete($id){
         try {
-            $sql = "DELETE FROM Cliente WHERE id = :id";
+            $sql = "DELETE FROM ganhos WHERE id = :id";
             $p_sql = BDPDO::getInstance()->prepare($sql);
             $p_sql->bindValue(":id", $id);
             return $p_sql->execute();
@@ -56,16 +56,16 @@ class ClienteDAO{
     }
 
     private function converterDadoParaObjeto($row){
-        $obj = new Cliente("", "");
-        $obj->setIdCliente($row['id']);
-        $obj->setNome($row['nome']);
-        $obj->setTelefone($row['telefone']);
+        $obj = new Ganhos(0, "");
+        $obj->setIdGanhos($row['id']); 
+        $obj->setValor($row['valor']);
+        $obj->setDescricao($row['descricao']);
         return $obj;
     }
 
     public function listAll(){
         try{
-            $sql = "SELECT * FROM Cliente";
+            $sql = "SELECT * FROM ganhos";
             $p_sql = BDPDO::getInstance()->prepare($sql);
             $p_sql->execute();
 
@@ -77,10 +77,11 @@ class ClienteDAO{
             }
             return $lista;
         }catch(Exception $e){
-            print "Ocorreu um erro ao tentar executar esta ação, foi gerado
- um LOG do mesmo, tente novamente mais tarde.";
+            print "Ocorreu um erro ao tentar executar esta ação, foi gerado um LOG do mesmo, tente novamente mais tarde.";
         }
     }
+
+
 
 }
 

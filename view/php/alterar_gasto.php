@@ -8,16 +8,15 @@ if(!isset($_SESSION['user'])){
     exit();
 }
 
-// Sanitização dos dados antigos (data e hora)
-$dataAntiga = filter_input(INPUT_POST, 'data', FILTER_SANITIZE_STRING);
-$horaAntiga = filter_input(INPUT_POST, 'hora', FILTER_SANITIZE_STRING);
+// Sanitização do ID
+$id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
 ?>
 
 <html lang="pt-br">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alterar Serviço</title>
+    <title>Alterar Gasto</title>
     <!-- Bootstrap CSS via CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -60,31 +59,18 @@ $horaAntiga = filter_input(INPUT_POST, 'hora', FILTER_SANITIZE_STRING);
 
     <article id="main-content">
         <div class="container">
-            <h1 class="mb-4">Alterar Serviço</h1>
-            <form name="alterar_servico" method="POST" action="/lt_refrigeracaoDAO/controller/servicoUpdateController.php">
+            <h1 class="mb-4">Alterar Gasto</h1>
+            <form name="alterar_gasto" method="POST" action="/lt_refrigeracaoDAO/controller/gastosUpdateController.php">
                 <div class="form-group">
-                    <label for="tipo_servico">NOVO TIPO DE SERVIÇO:</label>
-                    <input type="text" name="tipo_servico" id="tipo_servico" class="form-control" required>
+                    <label for="valor">NOVO VALOR:</label>
+                    <input type="text" name="valor" id="valor" class="form-control" required pattern="^\d+(\.\d{1,2})?$" title="Digite um valor monetário válido">
                 </div>
                 <div class="form-group">
-                    <label for="cliente">NOVO CLIENTE CONTRATANTE:</label>
-                    <input type="text" name="cliente" id="cliente" class="form-control" required>
+                    <label for="descricao">NOVA DESCRIÇÃO:</label>
+                    <input type="text" name="descricao" id="descricao" class="form-control" required>
                 </div>
-                <div class="form-group">
-                    <label for="data">NOVO DATA DO SERVIÇO:</label>
-                    <input type="date" name="data" id="data" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="hora">NOVO HORÁRIO DO SERVIÇO:</label>
-                    <input type="time" name="hora" id="hora" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="local_servico">NOVO LOCAL DO SERVIÇO:</label>
-                    <input type="text" name="local_servico" id="local_servico" class="form-control" required>
-                </div>
-                <input type="hidden" name="dataAntiga" value="<?php echo htmlspecialchars($dataAntiga); ?>">
-                <input type="hidden" name="horaAntiga" value="<?php echo htmlspecialchars($horaAntiga); ?>">
-                <button type="submit" class="btn btn-primary" aria-label="Alterar Serviço">Alterar Serviço</button>
+                <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>">
+                <button type="submit" class="btn btn-primary">Alterar Gasto</button>
             </form>
         </div>
     </article>

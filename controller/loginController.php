@@ -12,7 +12,6 @@ if(isset($_POST['email']) && isset($_POST['senha'])){
 		header("Location: /lt_refrigeracaoDAO/view/php/home.php");
 		exit();
 	}else{
-		
 		header("Location: /lt_refrigeracaoDAO/controller/loginAlertLoginController.php");
 		exit();
 	}

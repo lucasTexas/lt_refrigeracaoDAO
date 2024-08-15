@@ -3,6 +3,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] .'/lt_refrigeracaoDAO/model/vo/Cliente.php'; 
 require_once $_SERVER['DOCUMENT_ROOT'] .'/lt_refrigeracaoDAO/model/DAO/ClienteDAO.php';
 
+
 if(isset($_POST['nome']) && isset($_POST['telefone'])){
 
 	if($_POST['nome'] === '' || $_POST['telefone'] === ''){

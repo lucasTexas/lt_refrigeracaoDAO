@@ -1,23 +1,9 @@
 <!DOCTYPE html>
-
-<?php  
-session_start();
-
-if(!isset($_SESSION['user'])){
-    header('Location: /lt_refrigeracaoDAO/controller/loginAlertHome.php');
-    exit();
-}
-
-// Sanitização dos dados antigos (data e hora)
-$dataAntiga = filter_input(INPUT_POST, 'data', FILTER_SANITIZE_STRING);
-$horaAntiga = filter_input(INPUT_POST, 'hora', FILTER_SANITIZE_STRING);
-?>
-
 <html lang="pt-br">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alterar Serviço</title>
+    <title>Alterar Usuário</title>
     <!-- Bootstrap CSS via CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -53,38 +39,43 @@ $horaAntiga = filter_input(INPUT_POST, 'hora', FILTER_SANITIZE_STRING);
             margin-left: 250px; /* Espaço para o menu lateral */
             padding: 20px;
         }
+        .form-group {
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
+    <?php  
+    session_start();
+    if(!isset($_SESSION['user'])){
+        header('Location: /lt_refrigeracaoDAO/controller/loginAlertHome.php');
+        exit();
+    }
+
+    // Certifique-se de sanitizar o id antes de usá-lo
+    $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
+    ?>
+
     <?php include 'menu.php'; ?>
 
     <article id="main-content">
         <div class="container">
-            <h1 class="mb-4">Alterar Serviço</h1>
-            <form name="alterar_servico" method="POST" action="/lt_refrigeracaoDAO/controller/servicoUpdateController.php">
+            <h1 class="mb-4">Alterar Usuário</h1>
+            <form name="alterar_usuario" method="POST" action="/lt_refrigeracaoDAO/controller/usuarioUpdateController.php">
                 <div class="form-group">
-                    <label for="tipo_servico">NOVO TIPO DE SERVIÇO:</label>
-                    <input type="text" name="tipo_servico" id="tipo_servico" class="form-control" required>
+                    <label for="nome">NOVO NOME:</label>
+                    <input type="text" name="nome" id="nome" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="cliente">NOVO CLIENTE CONTRATANTE:</label>
-                    <input type="text" name="cliente" id="cliente" class="form-control" required>
+                    <label for="email">NOVO EMAIL:</label>
+                    <input type="email" name="email" id="email" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="data">NOVO DATA DO SERVIÇO:</label>
-                    <input type="date" name="data" id="data" class="form-control" required>
+                    <label for="senha">NOVA SENHA:</label>
+                    <input type="password" name="senha" id="senha" class="form-control" required>
                 </div>
-                <div class="form-group">
-                    <label for="hora">NOVO HORÁRIO DO SERVIÇO:</label>
-                    <input type="time" name="hora" id="hora" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label for="local_servico">NOVO LOCAL DO SERVIÇO:</label>
-                    <input type="text" name="local_servico" id="local_servico" class="form-control" required>
-                </div>
-                <input type="hidden" name="dataAntiga" value="<?php echo htmlspecialchars($dataAntiga); ?>">
-                <input type="hidden" name="horaAntiga" value="<?php echo htmlspecialchars($horaAntiga); ?>">
-                <button type="submit" class="btn btn-primary" aria-label="Alterar Serviço">Alterar Serviço</button>
+                <input type="hidden" name="id" value="<?php echo htmlspecialchars($id); ?>">
+                <button type="submit" class="btn btn-primary" aria-label="Alterar Usuário">Alterar Usuário</button>
             </form>
         </div>
     </article>
